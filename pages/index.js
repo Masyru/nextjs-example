@@ -1,67 +1,46 @@
-import Head from 'next/head';
-import Link from 'next/link';
+import Head from "next/head";
+import { confetti } from "../components/Confetti";
+import Intro from '../components/Intro';
+import Gallery from "../components/Gallery";
+import Wishes from "../components/Wishes";
 
-import styles from '../styles/Home.module.css';
 
-export default function Home() {
-  return (
-      <div className={styles.container}>
-          <Head>
-              <title>Create Next App</title>
-              <link rel="icon" href="/favicon.ico" />
-          </Head>
+export default class Birth extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            confetti: false,
+        }
+    }
 
-          <main className={styles.main}>
-                    <h1 className={styles.title}>
-                        Read <Link href="/posts/first-post"><a href="">this page!</a></Link>
-                    </h1>
+    componentDidMount(){
+        setTimeout(() => this.setState({confetti: true}), 1000);
+        setTimeout(() => this.setState({confetti: false}), 5000)
+    }
 
-                    <p className={styles.description}>
-                      Get started by editing{' '}
-                      <code className={styles.code}>pages/index.js</code>
-                    </p>
+    render() {
+        let app =
+            <div style={{
+                width: '100%',
+                height:  '100%',
+            }}>
+                <Head>
+                    <title>С днем рождения, Лев ! ! ! </title>
+                    <meta property="og:title" content="С днем рождения, Лев!!!" key="title" />
+                    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+                    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+                </Head>
+                { this.state.confetti ? confetti : null }
+                <Intro />
+                <div id="first"/>
+                <h2 style={{
+                    fontWeight: '300',
+                }}>Пожелания</h2>
+                <Wishes />
+                <h2>Воспоминания</h2>
+                <Gallery />
+            </div>;
 
-                    <div className={styles.grid}>
-                      <a href="https://nextjs.org/docs" className={styles.card}>
-                        <h3>Documentation &rarr;</h3>
-                        <p>Find in-depth information about Next.js features and API.</p>
-                      </a>
-
-                      <a href="https://nextjs.org/learn" className={styles.card}>
-                        <h3>Learn &rarr;</h3>
-                        <p>Learn about Next.js in an interactive course with quizzes!</p>
-                      </a>
-
-                      <a
-                        href="https://github.com/vercel/next.js/tree/master/examples"
-                        className={styles.card}
-                      >
-                        <h3>Examples &rarr;</h3>
-                        <p>Discover and deploy boilerplate example Next.js projects.</p>
-                      </a>
-
-                      <a
-                        href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                        className={styles.card}
-                      >
-                        <h3>Deploy &rarr;</h3>
-                        <p>
-                          Instantly deploy your Next.js site to a public URL with Vercel.
-                        </p>
-                      </a>
-                    </div>
-          </main>
-
-          <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+        return (app);
+    }
 }
