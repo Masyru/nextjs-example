@@ -1,138 +1,13 @@
 import React from "react";
-import jquery from "jquery"
-
-const $ = jquery
+import Head from 'next/head';
 
 class Case extends React.Component{
-    constructor(props) {
-        super(props);
-    }
-
-    startRoll(){
-        $(document).ready(function() {
-            var tMax = 4000, // animation time, ms
-                height = 700,
-                speeds = [],
-                r = [],
-                target = 11111,
-                reading = 11111,
-                sTarget = target.toString(),
-                sReading = reading.toString(),
-                numberOutput = [],
-                reels = [
-                    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-                    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-                    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-                    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-                    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-                ],
-                $reels,
-                start;
-
-            function init(){
-                $reels = $('.reel').each(function(i, el){
-                    el.innerHTML = '<div class="reel-holder"><p>' + reels[i].join('</p><p>') + '</p></div><div class="reel-holder"><p>' + reels[i].join('</p><p>') + '</p></div><div class="reel-door">?</div>'
-                });
-
-                // Add user's meter reading to fake reel for comparison
-                $('.fake-reel').each(function(i, el){
-                    el.innerHTML = sReading.charAt(i);
-                });
-
-                $('.lever').click(action);
-            }
-
-            function action(){
-                if (start !== undefined) return;
-
-                $('.reel-door').fadeOut(100);
-                $('.lever').attr('disabled', true)
-                    .addClass('button-inactive')
-                    .text('Good luck!');
-                for (var i = 0, len = sTarget.length; i < len; i += 1) {
-                    var intOffset = (parseInt(+sTarget.charAt(i) | 0)) * height / 10 - ((height / 10) * 2);
-                    numberOutput[i] = intOffset >= 0 ? intOffset : (height - (height / 10));
-                }
-                for (var j = 0; j < 5; ++j) {
-                    speeds[j] = Math.random() + 1;
-                    r[j] = (Math.random() * 10 | 0) * height / 10;
-                }
-                animate();
-            }
-
-            function animate(now){
-                if (!start) start = now;
-                var t = now - start || 0;
-
-                for (var i = 0; i < 5; ++i)
-                    $reels[i].scrollTop = (speeds[i] / tMax / 2 * (tMax - t) * (tMax - t) + numberOutput[i]) % height | 0;
-                if (t < tMax) {
-                    requestAnimationFrame(animate);
-                } else {
-                    start = undefined;
-                    check();
-                }
-            }
-
-            function check(){
-                var matchedNumbers = 0;
-
-                for (var i = 0, len = sTarget.length; i < len; i += 1) {
-                    var targetReading = sReading.charAt(i) | 0,
-                        targetInt = sTarget.charAt(i) | 0,
-                        reelClass = targetReading == targetInt ? 'match' : 'no-match';
-
-                    $('.reel:eq(' + i + '), .fake-reel:eq(' + i + ')').addClass(reelClass);
-                    targetReading == targetInt ? matchedNumbers ++ : null;
-                }
-
-                var announcement;
-
-                if (matchedNumbers == 5) {
-                    announcement = 'You matched all 5 numbers! you win!!!';
-                } else if (matchedNumbers == 1) {
-                    announcement = 'You matched 1 number. Better luck next time!';
-                } else {
-                    announcement = 'You matched ' + matchedNumbers + ' numbers. Better luck next time!';
-                }
-
-                $('.js-announcement').text(announcement);
-
-                $('.lever').attr('disabled', false).removeClass('button-inactive').text('Start');
-            }
-
-            init();
-        });
-    }
-
     render() {
-        const roll =
-            <div className="slot-machine">
-                <h1>CSS/JS Slot machine</h1>
-                <div className="group">
-                    <div className="fake-reel"/>
-                    <div className="fake-reel"/>
-                    <div className="fake-reel"/>
-                    <div className="fake-reel"/>
-                    <div className="fake-reel"/>
-                </div>
-
-                <div className="group">
-                    <div className="reel"/>
-                    <div className="reel"/>
-                    <div className="reel"/>
-                    <div className="reel"/>
-                    <div className="reel"/>
-                </div>
-
-                <h2 className="js-announcement announcement"/>
-
-                <button className="lever button">
-                    Start
-                </button>
-            </div>;
-
-        return(roll)
+        return(<div>
+            <h1>
+                Ахахахаахахха помнишь, спроси у меня про подарок!
+            </h1>
+        </div>)
     }
 }
 
@@ -149,6 +24,9 @@ export default class Casino extends React.Component{
     render(){
         const login =
             <div className="login">
+                <Head>
+                    <title>Подэрок</title>
+                </Head>
                 <label htmlFor="inp" className="inp">
                     <input type="password" id="inp" placeholder="Пароль в 244 комнату" pattern=".{6,}" onChange={(e) => {
                         if(this.state.true_passwords.includes(e.target.value)){
