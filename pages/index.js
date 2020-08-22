@@ -1,6 +1,5 @@
 import Head from "next/head";
 import React from "react";
-import util from "../styles/utils.module.css";
 
 class Footer extends React.Component{
     render() {
@@ -296,8 +295,8 @@ const confetti =
 class Intro extends React.Component{
         render(){
                 const intro =
-                    <div className={util.intro}>
-                            <div className={util.intro__text}>
+                    <div className={'intro'}>
+                            <div className={'intro__text'}>
                                     <h2>С днем рождения, Лева <img src="/images/balloon.png" width='40px' height='40px' /></h2>
                                     <a href='/#first'>
                                             Go. Around. Flex.
